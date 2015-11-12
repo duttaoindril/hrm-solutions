@@ -241,7 +241,8 @@ gulp.task('deploy-data-contributors', [ 'deploy-clean' ], function () {
 gulp.task('deploy-data', [ 'deploy-data-programs', 'deploy-data-contributors' ]);
 
 gulp.task('deploy-page', [ 'deploy-data' ], function () {
-    var index = require('./.deploy/data/index.json');
+    var index = require('./.deploy/data/index.json'),
+        contributors = require('./.deploy/data/contributors.json');
 
     var topScores = levels.map(function (level) {
         if (level.cutscene) {
@@ -272,7 +273,8 @@ gulp.task('deploy-page', [ 'deploy-data' ], function () {
 
     return gulp.src('index.html')
         .pipe(plugins.template({
-            topScores: topScores
+            topScores: topScores,
+            contributors: contributors
         }))
         .pipe(plugins.rename({ extname: '.html' }))
         .pipe(gulp.dest('.deploy'));
